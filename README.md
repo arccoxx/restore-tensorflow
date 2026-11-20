@@ -22,6 +22,25 @@ Research archive on TensorFlow's history: the 2015 open-source release, the C++/
 - AMD Instinct MI430X (announced Nov 12 at SC26): native FP64 at 288 TFLOPS, 432 GB HBM4, 23 TB/s bandwidth. Emulated FP64 needs ~3x memory of native.
 - AMD MI455X: 21,300 tokens/sec/GPU on DeepSeek-R1, ~30% ahead of Nvidia Vera Rubin (AMD's own measurement, not peer-reviewed).
 
+## The GraphDef Text Format (.pbtxt)
+
+Protobuf's human-readable text serialization of the raw computation graph. Node names, ops, inputs, attributes in braced indented script style with almost no punctuation. Google's internal engineers worked with these directly before the Python API wrapped them. Still generatable today via `tf.io.write_graph(..., as_text=True)`.
+
+**Important caveat:** This is NOT what Aidan is remembering. He describes an actual language — possibly called "TensorFlow" or sounding like "Tense" — that:
+- Ran directly on TensorFlow chips (TPUs)
+- Had no interpreter
+- Was its own standalone code/language
+- Was script-oriented with very little punctuation
+- Was from the early days (pre- or early-Python-API era)
+
+Closest public candidates found so far:
+1. **HLO text format** — XLA's High-Level Optimizer IR has a textual dump format that is script-like. Not confirmed as a standalone language.
+2. **LLO (Low Level Operators)** — TPU-specific IR mapping directly to hardware units (MXU, VPU, XLU, DMA). Internal, mostly undocumented. Patrick Toulme traced JAX→HLO→LLO→VLIW on a rented v6e in Jan 2026.
+3. **TPU v1 ISA** — proprietary CISC with ~20 instructions, sent over PCIe from host. Not a user-facing language.
+4. **VLIW bundles** — final machine code; proprietary, not public.
+
+No public record of a standalone language literally named "TensorFlow" or "Tense" that compiled directly to TPU instructions without an interpreter. This remains an open thread — possibly internal Google material, a misremembered name, or something from a specific early demo/talk not indexed.
+
 ## Open Threads
 
 - Microspan deintegration: separation quality sweep from 4ms to 128ms against window length, SI-SDR metrics.
@@ -29,6 +48,7 @@ Research archive on TensorFlow's history: the 2015 open-source release, the C++/
 - Analog-style programming of digital chips to bypass OS abstraction layers.
 - Mapping Google's formula-flow visualizations onto modular DSP patching paradigms.
 - Neural computation shift from spike-as-bit to population codes and dynamical systems.
+- **Identifying the early TensorFlow/Tense chip language Aidan remembers.**
 
 ## Related Repos
 
